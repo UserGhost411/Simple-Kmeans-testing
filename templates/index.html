@@ -1,0 +1,65 @@
+<div style="margin:200px;margin-top:0px;">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+    let tinggi = {{ markers['tinggi']| safe }};
+    let sedang = {{ markers['sedang']| safe }};
+    let rendah = {{ markers['rendah']| safe }};
+    let centroid = {{ markers['centroid']| safe }};
+</script>
+
+<script>
+    const data = {
+        datasets: [
+            {
+                label: 'Tinggi',
+                data: tinggi,
+                pointRadius: 5,
+                borderColor: '#4287f5',
+                backgroundColor: '#4287f5'
+
+            },
+            {
+                label: 'Sedang',
+                data: sedang,
+                pointRadius: 5,
+                borderColor: '#febc65',
+                backgroundColor: '#febc65'
+            },
+            {
+                label: 'Rendah',
+                data: rendah,
+                pointRadius: 5,
+                borderColor: '#fe6565',
+                backgroundColor: '#fe6565'
+            },
+            {
+                label: 'Centroid',
+                data: centroid,
+                pointRadius: 10,
+                borderColor: '#3024d6',
+                backgroundColor: '#3024d6'
+            }
+        ]
+    };
+    new Chart(ctx, {
+        type: 'scatter',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Judul nya bosque'
+                }
+            }
+        }
+    });
+</script>
