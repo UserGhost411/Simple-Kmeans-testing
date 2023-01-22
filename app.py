@@ -6,7 +6,14 @@ app=Flask(__name__)
 def myfunc(a, b):
     return {"x":a,"y":b}
 @app.route('/')
-def root():   
+def home():  
+    return render_template('index.html')
+@app.route('/data')
+def data():  
+    dataset = pd.read_csv("raw.csv")
+    return render_template('data.html', tables=[dataset.to_html(classes='table',border = 0, header="true")], titles=[''])
+@app.route('/chart')
+def chart():   
     markers={}
     dataset = pd.read_csv("raw.csv")
     x = dataset.iloc[:, [5, 7]].values
@@ -17,6 +24,6 @@ def root():
     markers['sedang'] = list(map(myfunc,x[y_kmeans == 2, 0],x[y_kmeans == 2, 1]))
     markers['rendah'] = list(map(myfunc,x[y_kmeans == 0, 0],x[y_kmeans == 0, 1]))
     markers['centroid'] = list(map(myfunc,kmeans.cluster_centers_[:, 0],kmeans.cluster_centers_[:, 1]))
-    return render_template('index.html',markers=markers )
+    return render_template('chart.html',markers=markers )
 if __name__ == '__main__':
     app.run(host="localhost", port=8080, debug=True)

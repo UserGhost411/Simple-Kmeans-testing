@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 
@@ -17,20 +18,16 @@
 </head>
 
 <body>
-    <div class="container pt-5 mt-5">
+    <div class="container pt-5">
 
-        <div id="uptime-card" class="mt-5 mx-5">
+        <div id="uptime-card" class="mt-5">
             <div class="card mt-5 " id="card-666649">
                 <div class="card-body">
-                    <h3 class="mb-5 text-center">Simple-Kmeans-Testing</h3>
+                    <h3 class="mb-5 text-center">Simple-Kmeans-Testing Chart</h3>
                     <div class="row mb-4">
-                        <div class="col-6 text-center">
-                            <a class="btn btn-primary" href="/chart">See Chart</a>
-                        </div>
-                        <div class="col-6 text-center">
-                            <a class="btn btn-success" href="/data">See Data</a></div>
+                        <canvas id="myChart"></canvas>
                     </div>
-                   
+                   <div class="text-center"><a href="/" class="btn btn-warning">Back</a></div>
                 </div>
             </div>
             <div id="footer">
@@ -49,6 +46,67 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+    let tinggi = {{ markers['tinggi']| safe }};
+    let sedang = {{ markers['sedang']| safe }};
+    let rendah = {{ markers['rendah']| safe }};
+    let centroid = {{ markers['centroid']| safe }};
+</script>
+
+<script>
+    const data = {
+        datasets: [
+            {
+                label: 'Tinggi',
+                data: tinggi,
+                pointRadius: 5,
+                borderColor: '#4287f5',
+                backgroundColor: '#4287f5'
+
+            },
+            {
+                label: 'Sedang',
+                data: sedang,
+                pointRadius: 5,
+                borderColor: '#febc65',
+                backgroundColor: '#febc65'
+            },
+            {
+                label: 'Rendah',
+                data: rendah,
+                pointRadius: 5,
+                borderColor: '#fe6565',
+                backgroundColor: '#fe6565'
+            },
+            {
+                label: 'Centroid',
+                data: centroid,
+                pointRadius: 10,
+                borderColor: '#3024d6',
+                backgroundColor: '#3024d6'
+            }
+        ]
+    };
+    new Chart(ctx, {
+        type: 'scatter',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Judul nya bosque'
+                }
+            }
+        }
+    });
+</script>
 </body>
 
 </html>
