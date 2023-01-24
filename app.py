@@ -15,9 +15,8 @@ def data():
 @app.route('/elbow')
 def elbow():   
     markers={}
-    dataset = pd.read_csv("raw.csv")
-    x = dataset.iloc[:, [5, 7]].values
-
+    dataset = pd.read_csv("raw_gud.csv")
+    x = dataset.iloc[:, [1,2,3,4,5,6,7,8,9]].values
     wcss = []
     for i in range (1, 11):
         kmeans = KMeans(n_clusters = i, init = 'k-means++', random_state = 42)
@@ -29,13 +28,13 @@ def elbow():
 @app.route('/chart')
 def chart():   
     markers={}
-    dataset = pd.read_csv("raw.csv")
-    x = dataset.iloc[:, [5, 3]].values
-    kota = dataset.iloc[:,[4]].values
+    dataset = pd.read_csv("raw_gud.csv")
+    x = dataset.iloc[:, [1,2,3,4,5,6,7,8,9]].values
+    kota = dataset.iloc[:,[0]].values
     kmeans = KMeans(n_clusters = 3, init = 'k-means++', random_state = 42)
     y_kmeans = kmeans.fit_predict(x)
-    markers['tinggi'] = list(map(myfunc,x[y_kmeans == 1, 0],x[y_kmeans == 1, 1]))
-    markers['sedang'] = list(map(myfunc,x[y_kmeans == 2, 0],x[y_kmeans == 2, 1]))
+    markers['tinggi'] = list(map(myfunc,x[y_kmeans == 2, 0],x[y_kmeans == 2, 1]))
+    markers['sedang'] = list(map(myfunc,x[y_kmeans == 1, 0],x[y_kmeans == 1, 1]))
     markers['rendah'] = list(map(myfunc,x[y_kmeans == 0, 0],x[y_kmeans == 0, 1]))
     markers['centroid'] = list(map(myfunc,kmeans.cluster_centers_[:, 0],kmeans.cluster_centers_[:, 1]))
     return render_template('chart.html',markers=markers )
