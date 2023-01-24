@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 
@@ -17,33 +18,25 @@
 </head>
 
 <body>
-    <div class="container pt-5 mt-5">
+    <div class="container pt-5">
 
-        <div id="uptime-card" class="mt-5 mx-5">
+        <div id="uptime-card" class="mt-5">
             <div class="card mt-5 " id="card-666649">
                 <div class="card-body">
-                    <h3 class="mb-5 text-center">Simple-Kmeans-Testing</h3>
+                    <h3 class="mb-5 text-center">Simple-Kmeans-Testing ELbow Method</h3>
                     <div class="row mb-4">
-                        <div class="col-4 text-center">
-                            <a class="btn btn-primary" href="/elbow">See Elbow Chart</a>
-                        </div>
-                        <div class="col-4 text-center">
-                            <a class="btn btn-info" href="/chart">See Chart</a>
-                        </div>
-                        <div class="col-4 text-center">
-                            <a class="btn btn-success" href="/data">See Data</a>
-                        </div>
+                        <canvas id="myChart"></canvas>
                     </div>
-
+                    <p>halo halo bandung</p>
+                   <div class="text-center"><a href="/" class="btn btn-warning">Back</a></div>
                 </div>
             </div>
             <div id="footer">
-                <span id="footer-text" class="float-right">Check <a
-                        href="https://github.com/UserGhost411/Simple-Kmeans-testing"
+                <span id="footer-text" class="float-right">Check <a href="https://github.com/UserGhost411/Simple-Kmeans-testing"
                         target="_blank">Repository</a><span>
             </div>
         </div>
-
+       
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -54,6 +47,38 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+    let elbow = {{ markers['elbow']| safe }};
+    let data_elbow = [];
+
+    for (let a of elbow){
+        data_elbow.push(data_elbow.length+1);
+    }
+</script>
+
+<script>
+    const data = {
+        labels: data_elbow,
+        datasets: [
+            {
+                label: 'test',
+                data: elbow,
+            }
+        ]
+    };
+    new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+            plugins: {
+                
+            }
+        }
+    });
+</script>
 </body>
 
 </html>

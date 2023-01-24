@@ -12,11 +12,25 @@ def home():
 def data():  
     dataset = pd.read_csv("raw.csv")
     return render_template('data.html', tables=[dataset.to_html(classes='table',border = 0, header="true")], titles=[''])
+@app.route('/elbow')
+def elbow():   
+    markers={}
+    dataset = pd.read_csv("raw.csv")
+    x = dataset.iloc[:, [5, 7]].values
+
+    wcss = []
+    for i in range (1, 11):
+        kmeans = KMeans(n_clusters = i, init = 'k-means++', random_state = 42)
+        kmeans.fit(x)
+        wcss.append(kmeans.inertia_)
+    markers['elbow'] = wcss 
+    return render_template('elbow.html',markers=markers )
+
 @app.route('/chart')
 def chart():   
     markers={}
     dataset = pd.read_csv("raw.csv")
-    x = dataset.iloc[:, [5, 7]].values
+    x = dataset.iloc[:, [5, 3]].values
     kota = dataset.iloc[:,[4]].values
     kmeans = KMeans(n_clusters = 3, init = 'k-means++', random_state = 42)
     y_kmeans = kmeans.fit_predict(x)
